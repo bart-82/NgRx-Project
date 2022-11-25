@@ -1,0 +1,14 @@
+<div class="box">
+  <h1>Comments for post n.{{ postId }}</h1>
+  <div
+    class="card text-center mycard"
+    *ngFor="let comment of comments$ | async"
+  >
+    <div class="card-header">User: {{ comment.email }}</div>
+    <div class="card-body">
+      <h5 class="card-title">{{ comment.name }}</h5>
+      <p class="card-text">{{ comment.body }}</p>
+    </div>
+    <div class="card-footer text-muted">{{ comment.id }}</div>
+  </div>
+</div>
