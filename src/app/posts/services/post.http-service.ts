@@ -5,11 +5,17 @@ import { Post } from '../models/post';
 
 @Injectable()
 export class PostHttpService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   findAllPosts(): Observable<any> {
     return this.http
       .get('https://jsonplaceholder.typicode.com/posts')
+      .pipe(map((res) => console.log(res)));
+  }
+
+  getPost(id: number): Observable<any> {
+    return this.http
+      .get('https://jsonplaceholder.typicode.com/posts/' + id)
       .pipe(map((res) => console.log(res)));
   }
 }

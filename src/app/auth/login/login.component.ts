@@ -17,9 +17,9 @@ export class LoginComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private store: Store<State>,
     private router: Router
-  ) {}
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   loginForm = new FormGroup({
     email: new FormControl('imafa82@gmail.com', [
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
       .pipe(
         tap((user) => {
           console.log(user);
-          this.store.dispatch(login({ user }));
+          this.store.dispatch(login({ auth: user }));
           this.router.navigateByUrl('/posts');
         })
       )

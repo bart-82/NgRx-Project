@@ -12,13 +12,13 @@ import { login } from './auth/auth.actions';
 export class AppComponent implements OnInit {
   title = 'NgRx_Project';
 
-  constructor(private router: Router, private store: Store<State>) {}
+  constructor(private router: Router, private store: Store<State>) { }
 
   ngOnInit(): void {
-    const userProfile = localStorage.getItem('user');
+    const userProfile = localStorage.getItem('auth');
 
     if (userProfile) {
-      this.store.dispatch(login({ user: JSON.parse(userProfile) })); //after the application refresh, the store contains the user profile
+      this.store.dispatch(login({ auth: JSON.parse(userProfile) })); //after the application refresh, the store contains the user profile
     }
   }
 }

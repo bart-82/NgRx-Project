@@ -14,6 +14,7 @@ import { EntityDataModule } from '@ngrx/data';
 import { EffectsModule } from '@ngrx/effects';
 import { RouterState, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { CommentsModule } from './posts/comments/comments.module';
+import { CommonsModule } from './commons/commons.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,6 +23,7 @@ import { CommentsModule } from './posts/comments/comments.module';
     AppRoutingModule,
     HttpClientModule,
     AuthModule,
+    CommonsModule,
     PostsModule,
     CommentsModule,
 
@@ -49,4 +51,4 @@ import { CommentsModule } from './posts/comments/comments.module';
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

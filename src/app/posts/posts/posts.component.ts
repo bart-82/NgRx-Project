@@ -1,12 +1,11 @@
-import { PostDataSharingService } from './../../Services/post-data-sharing.service';
-import { CommentEntityService } from './../services/comments/comment-entity.service';
-import { PostEntityService } from './../services/post-entity.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { PostHttpService } from './../services/post.http-service';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Observable, switchMap } from 'rxjs';
 import { Post } from 'src/app/posts/models/post';
 import { Comment } from '../models/comment';
+import { PostHttpService } from '../services/post.http-service';
+import { PostDataSharingService } from './../../Services/post-data-sharing.service';
+import { PostEntityService } from './../services/post-entity.service';
 
 @Component({
   selector: 'app-posts',
@@ -27,19 +26,38 @@ export class PostsComponent implements OnInit {
 
   selectedPost!: Post[];
 
+  routeId: number = 0;
+
   @Output() OnPost = new EventEmitter();
   @Output() OnComments = new EventEmitter();
 
   constructor(
     private postEntityService: PostEntityService,
-    private postDataSharing: PostDataSharingService
-  ) {} //usiamo entity service per prendere i posts dallo store
+    private postDataSharing: PostDataSharingService,
+    private route: ActivatedRoute,
+    private postService: PostHttpService
+  ) { } //usiamo entity service per prendere i posts dallo store
 
   ngOnInit(): void {
-    this.reload();
+
+
+    this.route.paramMap.subscribe(
+      params => {
+        if (params.get('id') != null) {
+          this.routeId = +params.get('id')!;
+          this.posts$ = this.postService.getPost(this.routeId);
+        } else {
+          this.getAllPosts();
+
+        }
+
+
+      }
+    );
+
   }
 
-  reload() {
+  getAllPosts() {
     this.posts$ = this.postEntityService.entities$;
   }
 

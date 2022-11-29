@@ -4,10 +4,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  { path: 'login', loadChildren: () => LoginComponent },
   { path: '', component: LoginComponent },
   {
     path: 'posts',
+    loadChildren: () =>
+      import('src/app/posts/posts.module').then((x) => x.PostsModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'post/:id',
     loadChildren: () =>
       import('src/app/posts/posts.module').then((x) => x.PostsModule),
     canActivate: [AuthGuard],
@@ -26,4 +32,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

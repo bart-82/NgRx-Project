@@ -8,14 +8,14 @@ import { tap } from 'rxjs';
 export class AuthEffects {
   //this class must not be injected in other parts oh the application
 
-  constructor(private actions$: Actions, private router: Router) {}
+  constructor(private actions$: Actions, private router: Router) { }
 
   login$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(AuthActions.login),
         tap((action) =>
-          localStorage.setItem('user', JSON.stringify(action.user))
+          localStorage.setItem('auth', JSON.stringify(action.auth))
         )
       ),
     { dispatch: false }
@@ -26,7 +26,7 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(AuthActions.logout),
         tap((action) => {
-          localStorage.removeItem('user');
+          localStorage.removeItem('auth');
           this.router.navigateByUrl('/login');
         })
       ),
